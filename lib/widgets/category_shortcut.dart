@@ -1,11 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Card de atalho de categoria utilizado na tela Home (seção "Explore o universo").
-///
-/// Reproduz fielmente os cards de Planetas, Galáxias e Estrelas:
-/// - Ícone estilizado com cor personalizada;
-/// - Título em negrito branco;
-/// - Fundo azul-escuro com borda sutil.
 class CategoryShortcut extends StatelessWidget {
   final String title;
   final IconData icon;
@@ -43,15 +37,12 @@ class CategoryShortcut extends StatelessWidget {
               child: Column(
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  // Ícone da categoria com cor temática
                   Icon(
                     icon,
                     color: iconColor,
                     size: 32,
                   ),
                   const SizedBox(height: 14),
-
-                  // Nome da categoria
                   Text(
                     title,
                     textAlign: TextAlign.center,

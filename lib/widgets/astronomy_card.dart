@@ -1,14 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/astronomy_item.dart';
 
-/// Card que representa um objeto astronômico na lista (ListView) da tela Explorar.
-///
-/// Reproduz fielmente o visual dos prints:
-/// - Fundo escuro azulado com borda sutil;
-/// - Imagem com cantos arredondados;
-/// - Categoria em caixa alta na cor lilás/azul;
-/// - Título em branco e descrição resumida;
-/// - Seta indicadora (chevron_right).
 class AstronomyCard extends StatelessWidget {
   final AstronomyItem item;
   final VoidCallback onTap;
@@ -40,7 +32,6 @@ class AstronomyCard extends StatelessWidget {
             padding: const EdgeInsets.all(12),
             child: Row(
               children: [
-                // Imagem do astro com cantos arredondados
                 ClipRRect(
                   borderRadius: BorderRadius.circular(14),
                   child: Container(
@@ -50,7 +41,6 @@ class AstronomyCard extends StatelessWidget {
                     child: Image.network(
                       item.imageUrl,
                       fit: BoxFit.cover,
-                      // Tratamento caso a imagem demore para carregar
                       loadingBuilder: (context, child, loadingProgress) {
                         if (loadingProgress == null) return child;
                         return const Center(
@@ -64,7 +54,6 @@ class AstronomyCard extends StatelessWidget {
                           ),
                         );
                       },
-                      // Fallback elegante caso a imagem falhe
                       errorBuilder: (context, error, stackTrace) {
                         return Container(
                           color: const Color(0xFF161B36),
@@ -79,13 +68,10 @@ class AstronomyCard extends StatelessWidget {
                   ),
                 ),
                 const SizedBox(width: 14),
-
-                // Informações textuais (Categoria, Nome, Descrição)
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // Tag da categoria/tipo
                       Text(
                         item.type.toUpperCase(),
                         style: const TextStyle(
@@ -96,8 +82,6 @@ class AstronomyCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 3),
-
-                      // Nome do objeto celeste
                       Text(
                         item.name,
                         style: const TextStyle(
@@ -107,8 +91,6 @@ class AstronomyCard extends StatelessWidget {
                         ),
                       ),
                       const SizedBox(height: 3),
-
-                      // Descrição curta
                       Text(
                         item.shortDescription,
                         maxLines: 2,
@@ -122,8 +104,6 @@ class AstronomyCard extends StatelessWidget {
                     ],
                   ),
                 ),
-
-                // Ícone de seta para detalhes
                 const Icon(
                   Icons.chevron_right,
                   color: Color(0xFF7A829E),

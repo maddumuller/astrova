@@ -7,10 +7,6 @@ void main() {
   runApp(const AstrovaApp());
 }
 
-/// Widget raiz do aplicativo Astrova.
-///
-/// Configura o tema visual cósmico (modo escuro), título
-/// e a tela principal de navegação (MainScreen).
 class AstrovaApp extends StatelessWidget {
   const AstrovaApp({super.key});
 
@@ -35,12 +31,6 @@ class AstrovaApp extends StatelessWidget {
   }
 }
 
-/// Tela principal do aplicativo com a barra de navegação inferior (BottomNavigationBar).
-///
-/// Gerencia a troca de abas entre:
-/// 0 - Home (Início)
-/// 1 - Explorar (Catálogo com ListView e API REST)
-/// 2 - Sobre (Informações acadêmicas)
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
 
@@ -49,23 +39,18 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-  // Índice da aba ativa atualmente
   int _currentIndex = 0;
-
-  // Categoria selecionada a partir dos atalhos da Home
   String? _selectedCategoryFromHome;
 
-  /// Navega para a tela Explorar e, opcionalmente, filtra por uma categoria.
   void _navigateToExplore(String? category) {
     setState(() {
       _selectedCategoryFromHome = category;
-      _currentIndex = 1; // Alterna para a aba Explorar
+      _currentIndex = 1;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    // Lista com as 3 telas principais do aplicativo
     final List<Widget> screens = [
       HomeScreen(onNavigateToExplore: _navigateToExplore),
       ExploreScreen(
@@ -91,13 +76,12 @@ class _MainScreenState extends State<MainScreen> {
             ),
           ),
         ),
+        // Requisito: Navegação com BottomNavigationBar
         child: BottomNavigationBar(
           currentIndex: _currentIndex,
           onTap: (index) {
-            // Gerenciamento de estado nativo: atualiza o índice da aba
+            // Requisito: Gerenciamento de estado nativo com setState
             setState(() {
-              // Se o usuário clicar diretamente na aba Explorar pela barra,
-              // mantemos ou limpamos o filtro de atalho da Home
               if (index != 1) {
                 _selectedCategoryFromHome = null;
               }

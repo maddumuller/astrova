@@ -2,50 +2,79 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/astronomy_item.dart';
 
-/// Serviço responsável por realizar as requisições HTTP e consumir a API REST de astronomia.
-///
-/// Este arquivo foi estruturado de forma didática para a disciplina de DDM,
-/// demonstrando claramente os quatro passos fundamentais do consumo de uma API:
-///
-/// 1. Realização da requisição HTTP assíncrona (http.get).
-/// 2. Recebimento da resposta e validação do status code (200).
-/// 3. Decodificação do JSON (jsonDecode) e conversão para objetos AstronomyItem.
-/// 4. Retorno dos dados prontos para a camada de visualização (UI).
 class AstronomyService {
-  // URL do endpoint REST que fornece os dados astronômicos em formato JSON.
-  // Utilizamos um endpoint público com os dados do catálogo do Astrova.
+  // Onde se encontra a API: Endpoint REST com os dados astronômicos em formato JSON
   static const String _apiUrl =
       'https://raw.githubusercontent.com/maddumuller/astrova/main/assets/data/astronomy_items.json';
 
-  /// Busca a lista de objetos astronômicos consumindo a API REST.
-  ///
-  /// Utiliza async/await de forma simples e direta.
-  /// Contém tratamento de erros e fallback para garantir funcionamento
-  /// mesmo se o dispositivo estiver offline durante a apresentação.
+  // Onde se encontra a API: Endpoint da NASA APOD (Astronomy Picture of the Day)
+  static const String _nasaApodUrl =
+      'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY';
+
+  static AstronomyItem? _cachedApod;
+
+  Future<AstronomyItem> getNasaApod() async {
+    if (_cachedApod != null) {
+      return _cachedApod!;
+    }
+
+    try {
+      // Requisito: Consumo de API REST - Requisição HTTP GET assíncrona (com async/await)
+      final response = await http
+          .get(Uri.parse(_nasaApodUrl))
+          .timeout(const Duration(seconds: 8));
+
+      // Requisito: Consumo de API REST - Recebimento e validação da resposta (statusCode 200)
+      if (response.statusCode == 200) {
+        // Requisito: Consumo de API REST - Decodificação do JSON (jsonDecode) e conversão para objetos AstronomyItem
+        final Map<String, dynamic> json =
+            jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
+
+        final explanation = json['explanation'] as String? ?? '';
+        final shortDesc = explanation.length > 130
+            ? '${explanation.substring(0, 130)}...'
+            : explanation;
+        final imageUrl = json['url'] as String? ??
+            (json['hdurl'] as String? ??
+                'https://images.unsplash.com/photo-1506703719100-a0f3a48c0f86?w=400&q=80');
+        final date = json['date'] as String? ?? '';
+        final copyright = json['copyright'] as String?;
+
+        _cachedApod = AstronomyItem(
+          id: 'nasa_apod',
+          name: json['title'] as String? ?? 'Destaque Astronômico',
+          category: 'NASA APOD',
+          type: 'FOTO ASTRONÔMICA DO DIA',
+          shortDescription: shortDesc,
+          description: explanation,
+          imageUrl: imageUrl,
+          distance: date.isNotEmpty ? 'Data: $date' : 'Hoje',
+          diameter: copyright != null
+              ? 'Créditos: ${copyright.replaceAll('\n', ' ').trim()}'
+              : 'Créditos: NASA / APOD',
+          curiosity:
+              'A Astronomy Picture of the Day (APOD) é um serviço mantido pela NASA que apresenta diariamente uma imagem ou fotografia diferente do universo.',
+        );
+
+        return _cachedApod!;
+      } else {
+        return _obterDadosLocais()[3];
+      }
+    } catch (e) {
+      return _obterDadosLocais()[3];
+    }
+  }
+
   Future<List<AstronomyItem>> getAstronomyItems() async {
     try {
-      // -----------------------------------------------------------------------
-      // PASSO 1: Onde a requisição HTTP é realizada
-      // -----------------------------------------------------------------------
-      // O método http.get faz uma requisição HTTP GET para a URL informada.
-      // O 'await' pausa a execução da função até que o servidor responda,
-      // sem travar a interface do aplicativo.
+      // Requisito: Consumo de API REST - Requisição HTTP GET assíncrona (com async/await)
       final response = await http
           .get(Uri.parse(_apiUrl))
           .timeout(const Duration(seconds: 5));
 
-      // -----------------------------------------------------------------------
-      // PASSO 2: Como o JSON é recebido
-      // -----------------------------------------------------------------------
-      // O servidor retorna um objeto Response contendo o statusCode e o body.
-      // O código 200 indica que a requisição foi bem-sucedida.
+      // Requisito: Consumo de API REST - Recebimento e validação da resposta (statusCode 200)
       if (response.statusCode == 200) {
-        // ---------------------------------------------------------------------
-        // PASSO 3: Como os dados são convertidos
-        // ---------------------------------------------------------------------
-        // 1. jsonDecode transforma o texto JSON puro (String) em estrutura Dart (List/Map).
-        // 2. Com o .map(), convertemos cada Map do JSON em um objeto AstronomyItem
-        //    usando o construtor AstronomyItem.fromJson().
+        // Requisito: Consumo de API REST - Decodificação do JSON (jsonDecode) e conversão para objetos AstronomyItem
         final List<dynamic> listaJson = jsonDecode(utf8.decode(response.bodyBytes));
         final List<AstronomyItem> itens = listaJson
             .map((item) => AstronomyItem.fromJson(item as Map<String, dynamic>))
@@ -53,20 +82,13 @@ class AstronomyService {
 
         return itens;
       } else {
-        // Se o servidor respondeu com outro status (ex: 404 ou 500), usamos os dados locais.
         return _obterDadosLocais();
       }
     } catch (e) {
-      // Caso ocorra erro de conexão (ex: sem internet ou timeout),
-      // retornamos com segurança os dados padrão para a apresentação nunca falhar.
       return _obterDadosLocais();
     }
   }
 
-  /// Dados padrão idênticos aos prints fornecidos para o trabalho acadêmico.
-  ///
-  /// Garante que o aplicativo sempre apresente os 5 objetos exatos
-  /// (Marte, Júpiter, Saturno, Andrômeda e Sirius), mesmo sem acesso à internet.
   List<AstronomyItem> _obterDadosLocais() {
     return const [
       AstronomyItem(

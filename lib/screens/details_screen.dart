@@ -1,15 +1,6 @@
 import 'package:flutter/material.dart';
 import '../models/astronomy_item.dart';
 
-/// Tela de Detalhes do Astrova.
-///
-/// Exibe as informações completas do objeto astronômico selecionado:
-/// - Imagem ampliada;
-/// - Tag/categoria estilizada;
-/// - Nome e descrição detalhada;
-/// - Cards de especificações (distância, diâmetro, etc.);
-/// - Card de curiosidade astronômica;
-/// - Navegação de retorno via Navigator.pop().
 class DetailsScreen extends StatelessWidget {
   final AstronomyItem item;
 
@@ -25,7 +16,7 @@ class DetailsScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
           onPressed: () {
-            // Navegação simples nativa: retorna à tela anterior
+            // Requisito: Navegação entre telas com Navigator.pop
             Navigator.pop(context);
           },
         ),
@@ -44,7 +35,6 @@ class DetailsScreen extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // Imagem destacada do objeto com bordas arredondadas e sombra
             ClipRRect(
               borderRadius: BorderRadius.circular(24),
               child: Container(
@@ -70,8 +60,6 @@ class DetailsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 20),
-
-            // Badge / Tag com o tipo astronômico
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
               decoration: BoxDecoration(
@@ -92,8 +80,6 @@ class DetailsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-
-            // Nome do astro
             Text(
               item.name,
               style: const TextStyle(
@@ -103,8 +89,6 @@ class DetailsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 12),
-
-            // Descrição completa
             Text(
               item.description,
               style: const TextStyle(
@@ -114,8 +98,6 @@ class DetailsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 24),
-
-            // Título da seção de dados técnicos
             const Text(
               'Informações Adicionais',
               style: TextStyle(
@@ -125,8 +107,6 @@ class DetailsScreen extends StatelessWidget {
               ),
             ),
             const SizedBox(height: 14),
-
-            // Cards de especificações (Distância e Diâmetro)
             Row(
               children: [
                 _buildInfoCard(
@@ -145,8 +125,6 @@ class DetailsScreen extends StatelessWidget {
               ],
             ),
             const SizedBox(height: 16),
-
-            // Card com curiosidade astronômica
             Container(
               width: double.infinity,
               padding: const EdgeInsets.all(16),
@@ -195,7 +173,6 @@ class DetailsScreen extends StatelessWidget {
     );
   }
 
-  /// Constrói um card para informações técnicas (Distância, Diâmetro)
   Widget _buildInfoCard({
     required String title,
     required String value,

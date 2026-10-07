@@ -4,16 +4,13 @@ import '../services/astronomy_service.dart';
 import '../widgets/astronomy_card.dart';
 import 'details_screen.dart';
 
-/// Tela de Catálogo/Explorar do Astrova.
-///
-/// Requisitos acadêmicos atendidos:
-/// - Consumo da API REST através de AstronomyService (com async/await);
-/// - Uso obrigatório de ListView (ListView.builder);
-/// - Gerenciamento de estado nativo com setState();
-/// - Filtro por categorias ("Todos", "Planetas", "Estrelas", "Galáxias");
-/// - Busca em tempo real por nome/categoria;
-/// - Tratamento de estados: Carregando, Erro e Sucesso;
-/// - Navegação nativa para a tela de Detalhes via Navigator.push().
+// Requisitos acadêmicos atendidos:
+// - Consumo da API REST através de AstronomyService (com async/await)
+// - Uso obrigatório de ListView (ListView.builder)
+// - Gerenciamento de estado nativo com setState()
+// - Filtro por categorias e busca em tempo real
+// - Tratamento de estados: Carregando, Erro e Sucesso
+// - Navegação nativa para a tela de Detalhes via Navigator.push()
 class ExploreScreen extends StatefulWidget {
   final String? initialCategory;
 
@@ -24,26 +21,16 @@ class ExploreScreen extends StatefulWidget {
 }
 
 class _ExploreScreenState extends State<ExploreScreen> {
-  // Instância do serviço que consome a API REST
+  // Requisito: Consumo de API REST - Instância do serviço da API
   final AstronomyService _astronomyService = AstronomyService();
 
-  // Controlador para o campo de texto da busca
   final TextEditingController _searchController = TextEditingController();
-
-  // Lista com todos os itens retornados pela API
   List<AstronomyItem> _allItems = [];
-
-  // Lista filtrada que será exibida no ListView
   List<AstronomyItem> _filteredItems = [];
-
-  // Controle de carregamento e mensagens de erro
   bool _isLoading = true;
   String? _errorMessage;
-
-  // Categoria atualmente selecionada no filtro
   String _selectedCategory = 'Todos';
 
-  // Categorias disponíveis para filtragem
   final List<String> _categories = [
     'Todos',
     'Planetas',
@@ -54,11 +41,10 @@ class _ExploreScreenState extends State<ExploreScreen> {
   @override
   void initState() {
     super.initState();
-    // Se recebeu uma categoria inicial da Home (ex: Planetas), utiliza-a
     if (widget.initialCategory != null) {
       _selectedCategory = widget.initialCategory!;
     }
-    // Dispara a busca dos dados na API REST
+    // Requisito: Consumo de API REST - Chamada para buscar dados da API
     _fetchItems();
   }
 
@@ -68,27 +54,26 @@ class _ExploreScreenState extends State<ExploreScreen> {
     super.dispose();
   }
 
-  /// Busca os dados astronômicos através do serviço REST.
-  ///
-  /// Demonstra o uso de async/await, setState e tratamento de exceções.
+  // Requisito: Consumo de API REST com async/await e setState
   Future<void> _fetchItems() async {
+    // Requisito: Gerenciamento de estado nativo com setState (Carregando)
     setState(() {
       _isLoading = true;
       _errorMessage = null;
     });
 
     try {
-      // 1. Requisição assíncrona ao serviço REST
+      // Requisito: Consumo de API REST - Requisição assíncrona ao serviço REST
       final items = await _astronomyService.getAstronomyItems();
 
-      // 2. Atualização do estado com os dados recebidos
+      // Requisito: Gerenciamento de estado nativo com setState (Sucesso)
       setState(() {
         _allItems = items;
         _isLoading = false;
         _applyFilters();
       });
     } catch (error) {
-      // 3. Tratamento em caso de falha na comunicação
+      // Requisito: Tratamento de erros na comunicação com a API
       setState(() {
         _errorMessage = 'Não foi possível carregar os dados astronômicos.';
         _isLoading = false;
@@ -96,17 +81,15 @@ class _ExploreScreenState extends State<ExploreScreen> {
     }
   }
 
-  /// Aplica a filtragem por categoria e pelo texto pesquisado pelo usuário.
+  // Requisito: Filtro por categorias e busca em tempo real
   void _applyFilters() {
     final query = _searchController.text.trim().toLowerCase();
 
     setState(() {
       _filteredItems = _allItems.where((item) {
-        // Filtro 1: Categoria
         final matchesCategory = _selectedCategory == 'Todos' ||
             item.category.toLowerCase() == _selectedCategory.toLowerCase();
 
-        // Filtro 2: Texto de busca (pesquisa por nome ou categoria)
         final matchesQuery = query.isEmpty ||
             item.name.toLowerCase().contains(query) ||
             item.type.toLowerCase().contains(query) ||
@@ -117,7 +100,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
     });
   }
 
-  /// Seleciona uma nova categoria e reexecuta os filtros
   void _onCategorySelected(String category) {
     setState(() {
       _selectedCategory = category;
@@ -133,15 +115,11 @@ class _ExploreScreenState extends State<ExploreScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // =================================================================
-            // CABEÇALHO DA TELA EXPLORAR
-            // =================================================================
             Padding(
               padding: const EdgeInsets.only(left: 20, right: 20, top: 16),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  // Tag superior "CATÁLOGO ASTRONÔMICO"
                   const Text(
                     'CATÁLOGO ASTRONÔMICO',
                     style: TextStyle(
@@ -152,8 +130,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     ),
                   ),
                   const SizedBox(height: 6),
-
-                  // Título principal
                   const Text(
                     'Explorar',
                     style: TextStyle(
@@ -163,8 +139,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     ),
                   ),
                   const SizedBox(height: 4),
-
-                  // Subtítulo descritivo
                   const Text(
                     'Descubra mundos além do nosso.',
                     style: TextStyle(
@@ -173,10 +147,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     ),
                   ),
                   const SizedBox(height: 18),
-
-                  // ===========================================================
-                  // CAMPO DE BUSCA
-                  // ===========================================================
                   Container(
                     decoration: BoxDecoration(
                       color: const Color(0xFF0E1225),
@@ -209,10 +179,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     ),
                   ),
                   const SizedBox(height: 16),
-
-                  // ===========================================================
-                  // FILTROS DE CATEGORIA (Pills/Chips)
-                  // ===========================================================
                   SingleChildScrollView(
                     scrollDirection: Axis.horizontal,
                     child: Row(
@@ -234,10 +200,9 @@ class _ExploreScreenState extends State<ExploreScreen> {
                                     : const Color(0xFF10142B),
                                 borderRadius: BorderRadius.circular(20),
                                 border: Border.all(
-                                  color: isSelected
-                                      ? const Color(0xFF7B8CDE)
-                                      : const Color(0xFF20264A),
-                                ),
+                                    color: isSelected
+                                        ? const Color(0xFF7B8CDE)
+                                        : const Color(0xFF20264A)),
                               ),
                               child: Text(
                                 category,
@@ -258,10 +223,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
                     ),
                   ),
                   const SizedBox(height: 14),
-
-                  // ===========================================================
-                  // CONTADOR DE ITENS
-                  // ===========================================================
                   if (!_isLoading && _errorMessage == null)
                     Text(
                       '${_filteredItems.length} objetos encontrados',
@@ -275,10 +236,6 @@ class _ExploreScreenState extends State<ExploreScreen> {
               ),
             ),
             const SizedBox(height: 6),
-
-            // =================================================================
-            // LISTVIEW DE OBJETOS ASTRONÔMICOS OU ESTADOS (Loading/Erro/Vazio)
-            // =================================================================
             Expanded(
               child: _buildContent(),
             ),
@@ -288,9 +245,8 @@ class _ExploreScreenState extends State<ExploreScreen> {
     );
   }
 
-  /// Constrói o corpo dinâmico da tela conforme o estado atual
   Widget _buildContent() {
-    // 1. Estado de Carregamento
+    // Requisito: Tratamento de estado - Carregamento
     if (_isLoading) {
       return const Center(
         child: Column(
@@ -309,7 +265,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
       );
     }
 
-    // 2. Estado de Erro
+    // Requisito: Tratamento de estado - Erro
     if (_errorMessage != null) {
       return Center(
         child: Padding(
@@ -347,7 +303,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
       );
     }
 
-    // 3. Estado de Busca Sem Resultados
+    // Requisito: Tratamento de estado - Busca sem resultados
     if (_filteredItems.isEmpty) {
       return const Center(
         child: Padding(
@@ -381,7 +337,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
       );
     }
 
-    // 4. Estado de Sucesso: ListView.builder
+    // Requisito: Exibição de itens com ListView (ListView.builder)
     return ListView.builder(
       padding: const EdgeInsets.only(top: 8, bottom: 20),
       itemCount: _filteredItems.length,
@@ -390,7 +346,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
         return AstronomyCard(
           item: item,
           onTap: () {
-            // Navegação nativa simples para a tela de detalhes
+            // Requisito: Navegação entre telas com Navigator.push
             Navigator.push(
               context,
               MaterialPageRoute(

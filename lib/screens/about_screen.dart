@@ -1,12 +1,5 @@
 import 'package:flutter/material.dart';
 
-/// Tela Sobre do Astrova.
-///
-/// Apresenta as informações do projeto acadêmico desenvolvido para a
-/// disciplina de Desenvolvimento para Dispositivos Móveis (DDM).
-///
-/// Detalha as tecnologias utilizadas (Flutter, Dart, API REST)
-/// e os requisitos avaliados na disciplina.
 class AboutScreen extends StatelessWidget {
   const AboutScreen({super.key});
 
@@ -20,9 +13,6 @@ class AboutScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              // ===============================================================
-              // IDENTIFICAÇÃO DO APLICATIVO
-              // ===============================================================
               Center(
                 child: Column(
                   children: [
@@ -85,10 +75,6 @@ class AboutScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 24),
-
-              // ===============================================================
-              // DESCRIÇÃO DO PROJETO
-              // ===============================================================
               Container(
                 width: double.infinity,
                 padding: const EdgeInsets.all(18),
@@ -108,10 +94,6 @@ class AboutScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 24),
-
-              // ===============================================================
-              // TECNOLOGIAS UTILIZADAS
-              // ===============================================================
               const Text(
                 'Tecnologias Utilizadas',
                 style: TextStyle(
@@ -121,7 +103,6 @@ class AboutScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 12),
-
               _buildTechCard(
                 title: 'Flutter',
                 subtitle: 'Framework de interface multiplataforma da Google',
@@ -129,7 +110,6 @@ class AboutScreen extends StatelessWidget {
                 iconColor: const Color(0xFF38BDF8),
               ),
               const SizedBox(height: 10),
-
               _buildTechCard(
                 title: 'Dart',
                 subtitle: 'Linguagem tipada, moderna e orientada a objetos',
@@ -137,7 +117,6 @@ class AboutScreen extends StatelessWidget {
                 iconColor: const Color(0xFF818CF8),
               ),
               const SizedBox(height: 10),
-
               _buildTechCard(
                 title: 'API REST (http)',
                 subtitle:
@@ -146,10 +125,7 @@ class AboutScreen extends StatelessWidget {
                 iconColor: const Color(0xFFC084FC),
               ),
               const SizedBox(height: 24),
-
-              // ===============================================================
-              // REQUISITOS ACADÊMICOS CUMPRIDOS
-              // ===============================================================
+              // Requisitos acadêmicos cumpridos
               const Text(
                 'Requisitos Acadêmicos',
                 style: TextStyle(
@@ -180,10 +156,6 @@ class AboutScreen extends StatelessWidget {
                 ),
               ),
               const SizedBox(height: 24),
-
-              // ===============================================================
-              // RODAPÉ COM VERSÃO
-              // ===============================================================
               const Center(
                 child: Text(
                   'Astrova • Versão 1.0.0',
@@ -201,7 +173,6 @@ class AboutScreen extends StatelessWidget {
     );
   }
 
-  /// Constrói um card para exibição de tecnologia
   Widget _buildTechCard({
     required String title,
     required String subtitle,
@@ -255,7 +226,6 @@ class AboutScreen extends StatelessWidget {
     );
   }
 
-  /// Constrói uma linha com ícone de confirmação para os requisitos atendidos
   Widget _buildRequirementRow(String text) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),

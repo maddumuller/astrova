@@ -1,12 +1,8 @@
-/// Modelo que representa um objeto astronômico no aplicativo Astrova.
-///
-/// Este modelo é utilizado para armazenar os dados vindos da API REST
-/// e trafegar essas informações entre as telas (Explorar -> Detalhes).
 class AstronomyItem {
   final String id;
   final String name;
-  final String category; // 'Planetas', 'Estrelas', 'Galáxias'
-  final String type; // 'PLANETA ROCHOSO', 'GIGANTE GASOSO', etc.
+  final String category;
+  final String type;
   final String shortDescription;
   final String description;
   final String imageUrl;
@@ -14,7 +10,6 @@ class AstronomyItem {
   final String diameter;
   final String curiosity;
 
-  // Construtor principal da classe
   const AstronomyItem({
     required this.id,
     required this.name,
@@ -28,11 +23,7 @@ class AstronomyItem {
     required this.curiosity,
   });
 
-  /// Construtor de fábrica (factory) para criar uma instância a partir de um Map (JSON).
-  ///
-  /// Passo a passo didático:
-  /// Recebe um `Map<String, dynamic>` (resultado do jsonDecode) e extrai cada campo,
-  /// garantindo valores padrão caso algum campo venha nulo.
+  // Requisito: Conversão do JSON da API REST para o modelo AstronomyItem
   factory AstronomyItem.fromJson(Map<String, dynamic> json) {
     return AstronomyItem(
       id: json['id']?.toString() ?? '',
@@ -48,7 +39,6 @@ class AstronomyItem {
     );
   }
 
-  /// Converte a instância de volta para um Map (útil para serialização).
   Map<String, dynamic> toJson() {
     return {
       'id': id,
