@@ -3,11 +3,10 @@ import 'package:http/http.dart' as http;
 import '../models/astronomy_item.dart';
 
 class AstronomyService {
-  // Onde se encontra a API: Endpoint REST com os dados astronômicos em formato JSON
-  static const String _apiUrl =
+    static const String _apiUrl =
       'https://raw.githubusercontent.com/maddumuller/astrova/main/assets/data/astronomy_items.json';
 
-  // Onde se encontra a API: Endpoint da NASA APOD (Astronomy Picture of the Day)
+
   static const String _nasaApodUrl =
       'https://api.nasa.gov/planetary/apod?api_key=DEMO_KEY';
 
@@ -19,15 +18,14 @@ class AstronomyService {
     }
 
     try {
-      // Requisito: Consumo de API REST - Requisição HTTP GET assíncrona (com async/await)
+
       final response = await http
           .get(Uri.parse(_nasaApodUrl))
           .timeout(const Duration(seconds: 8));
 
-      // Requisito: Consumo de API REST - Recebimento e validação da resposta (statusCode 200)
+
       if (response.statusCode == 200) {
-        // Requisito: Consumo de API REST - Decodificação do JSON (jsonDecode) e conversão para objetos AstronomyItem
-        final Map<String, dynamic> json =
+             final Map<String, dynamic> json =
             jsonDecode(utf8.decode(response.bodyBytes)) as Map<String, dynamic>;
 
         final explanation = json['explanation'] as String? ?? '';
@@ -67,14 +65,12 @@ class AstronomyService {
 
   Future<List<AstronomyItem>> getAstronomyItems() async {
     try {
-      // Requisito: Consumo de API REST - Requisição HTTP GET assíncrona (com async/await)
       final response = await http
           .get(Uri.parse(_apiUrl))
           .timeout(const Duration(seconds: 5));
 
-      // Requisito: Consumo de API REST - Recebimento e validação da resposta (statusCode 200)
+
       if (response.statusCode == 200) {
-        // Requisito: Consumo de API REST - Decodificação do JSON (jsonDecode) e conversão para objetos AstronomyItem
         final List<dynamic> listaJson = jsonDecode(utf8.decode(response.bodyBytes));
         final List<AstronomyItem> itens = listaJson
             .map((item) => AstronomyItem.fromJson(item as Map<String, dynamic>))

@@ -16,7 +16,7 @@ class DetailsScreen extends StatelessWidget {
         leading: IconButton(
           icon: const Icon(Icons.arrow_back_ios_new, color: Colors.white),
           onPressed: () {
-            // Requisito: Navegação entre telas com Navigator.pop
+
             Navigator.pop(context);
           },
         ),

@@ -4,13 +4,7 @@ import '../services/astronomy_service.dart';
 import '../widgets/astronomy_card.dart';
 import 'details_screen.dart';
 
-// Requisitos acadêmicos atendidos:
-// - Consumo da API REST através de AstronomyService (com async/await)
-// - Uso obrigatório de ListView (ListView.builder)
-// - Gerenciamento de estado nativo com setState()
-// - Filtro por categorias e busca em tempo real
-// - Tratamento de estados: Carregando, Erro e Sucesso
-// - Navegação nativa para a tela de Detalhes via Navigator.push()
+
 class ExploreScreen extends StatefulWidget {
   final String? initialCategory;
 
@@ -337,7 +331,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
       );
     }
 
-    // Requisito: Exibição de itens com ListView (ListView.builder)
+
     return ListView.builder(
       padding: const EdgeInsets.only(top: 8, bottom: 20),
       itemCount: _filteredItems.length,
@@ -346,7 +340,7 @@ class _ExploreScreenState extends State<ExploreScreen> {
         return AstronomyCard(
           item: item,
           onTap: () {
-            // Requisito: Navegação entre telas com Navigator.push
+
             Navigator.push(
               context,
               MaterialPageRoute(
