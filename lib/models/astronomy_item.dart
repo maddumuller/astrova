@@ -23,7 +23,7 @@ class AstronomyItem {
     required this.curiosity,
   });
 
-  // Requisito: Conversão do JSON da API REST para o modelo AstronomyItem
+  // Conversão do JSON da API rest para o modelo AstronomyItem
   factory AstronomyItem.fromJson(Map<String, dynamic> json) {
     return AstronomyItem(
       id: json['id']?.toString() ?? '',
