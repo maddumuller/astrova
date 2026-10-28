@@ -1,4 +1,4 @@
-# 🚀 Astrova — Exploração Astronômica
+# 🪐  Astrova 
 
 <div align="center">
 
@@ -13,31 +13,31 @@
 
 ## 🌌 Sobre o Projeto
 
-O **Astrova** é um aplicativo mobile que conecta entusiastas do espaço a dados científicos reais do universo. Ele combina a **API oficial da NASA** para exibir a Imagem Astronômica do Dia (*APOD*) com um catálogo interativo de corpos celestes (planetas, estrelas e galáxias), tudo envolvido em uma interface moderna com tema espacial (*Cosmic Dark*).
+O Astrova é um aplicativo mobile que conecta entusiastas do espaço a dados científicos reais do universo. Ele combina a API oficial da NASA para exibir a Imagem Astronômica do Dia (*APOD*) com um catálogo interativo de corpos celestes (planetas, estrelas e galáxias), tudo envolvido em uma interface moderna com tema espacial (*Cosmic Dark*).
 
 ---
 
 ## ✨ Funcionalidades Principais
 
-### 🏠 1. Tela Inicial (Home)
+### 1. Tela Inicial (Home)
 - **NASA APOD Diária:** Integração direta com a API da NASA exibindo a imagem do dia, data oficial e explicação científica.
 - **Atalhos Rápidos:** Acesso direto a categorias celestes (*Planetas*, *Galáxias* e *Estrelas*).
 - **Curiosidade Cósmica:** Destaque educativo rotativo com fatos sobre o universo.
 
-### 🔭 2. Explorar (Catálogo Cósmico)
+###  2. Explorar (Catálogo Cósmico)
 - **Consumo de API REST:** Carregamento dinâmico e assíncrono dos objetos celestes em formato JSON.
 - **Lista Fluida (`ListView.builder`):** Exibição otimizada com cards personalizados, miniatura de imagens e dados rápidos.
 - **Busca em Tempo Real:** Pesquisa instantânea por nome, tipo ou descrição.
 - **Filtros por Categoria:** Navegação dinâmica por chips (*Todos*, *Planetas*, *Estrelas*, *Galáxias*).
 - **Tratamento de Estados:** Telas e indicadores visuais para *Carregando*, *Erro com botão de tentar novamente* e *Nenhum resultado encontrado*.
 
-### 🪐 3. Detalhes do Objeto
+###  3. Detalhes do Objeto
 - **Visualização Imersiva:** Fotografia em alta resolução com tratamento de falhas e loading progressivo.
 - **Dados Técnicos:** Cards destacados com métricas astronômicas (distância da Terra, diâmetro e tipo cósmico).
 - **Curiosidade Científica:** Fatos específicos sobre o objeto selecionado.
 - **Navegação Nativa:** Retorno intuitivo com suporte à pilha de rotas (`Navigator.pop`).
 
-### ℹ️ 4. Sobre o Projeto
+###  4. Sobre o Projeto
 - Ficha técnica do aplicativo com identificação acadêmica da disciplina.
 - Lista interativa de tecnologias utilizadas e checklist visual dos requisitos cumpridos.
 
@@ -50,20 +50,6 @@ O **Astrova** é um aplicativo mobile que conecta entusiastas do espaço a dados
 | **NASA APOD** | Foto Astronômica do Dia oficial fornecida pela NASA | REST / JSON |
 | **Astrova Catalog API** | Catálogo com objetos do Sistema Solar, galáxias e estrelas | REST / JSON |
 
-> **Nota de Resiliência:** O aplicativo conta com mecanismo de cache em memória e fallback seguro para garantir que a interface nunca fique vazia, mesmo em situações de conexão lenta ou modo offline.
-
----
-
-## 🎯 Requisitos Acadêmicos Atendidos (DDM)
-
-- [x] **Framework e Linguagem:** Desenvolvimento completo com **Flutter** e **Dart**.
-- [x] **Consumo de API REST:** Requisições HTTP assíncronas utilizando `http.get`, `async/await` e decodificação de JSON (`jsonDecode`).
-- [x] **Exibição em Lista:** Catálogo renderizado com `ListView.builder` para máxima performance de memória.
-- [x] **Navegação:** Roteamento entre telas com `BottomNavigationBar` e transições de detalhes com `Navigator.push` / `Navigator.pop`.
-- [x] **Gerenciamento de Estado Nativo:** Controle de ciclos de vida, carregamentos e filtros utilizando `setState()`.
-- [x] **Arquitetura Modular:** Separação limpa em pastas (`models`, `screens`, `services`, `widgets`, `assets`).
-
----
 
 ## 📁 Estrutura de Pastas
 
@@ -93,7 +79,7 @@ astrova/
 
 ---
 
-## 🚀 Como Executar o Projeto
+##  Como Executar o Projeto
 
 ### Pré-requisitos
 - [Flutter SDK](https://flutter.dev/docs/get-started/install) instalado (versão `>= 3.13.2`).
@@ -118,14 +104,6 @@ astrova/
    ```
 
 ---
-
-## 🎨 Paleta de Cores (Cosmic Dark)
-
-- **Fundo Principal:** `#090A15`
-- **Cards & Superfícies:** `#10142B`
-- **Destaque Primário (Nebula Blue):** `#7B8CDE`
-- **Destaque Secundário (Cosmic Purple):** `#C084FC`
-- **Texto Secundário:** `#A0A5BD`
 
 ---
 
